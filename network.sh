@@ -13,3 +13,5 @@ sudo echo "" >> '/etc/network/interfaces'
 sudo echo "#auto eth0" >> '/etc/network/interfaces'
 sudo echo "#iface eth0 inet dhcp" >> '/etc/network/interfaces'
 sudo nano /etc/network/interfaces
+sudo ifconfig eth0 up
+sudo /etc/init.d/networking restart
