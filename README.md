@@ -10,6 +10,6 @@ $ git push
 
 # Run scripts in order
 $ sudo bash cmake.sh  
-$ sudo bash opencv.sh 
+$ sudo bash opencv.sh   
 $ sudo bash openmvg.sh  
 $ sudo bash network.sh  
