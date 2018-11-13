@@ -1,4 +1,4 @@
-cd labrador3D
+cd appBoard
 mkdir bin
 cmake . -Bbuild
 make -Cbuild
