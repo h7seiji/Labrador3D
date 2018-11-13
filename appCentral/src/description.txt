@@ -1,0 +1,57 @@
+cd labrador3D
+mkdir bin
+cmake . -Bbuild
+make -Cbuild
+
+=================================
+IN PC
+================================
+
+
+(1) start SFM_Data
+ - from a number of images, we start a sfmdata.bin file
+ - start folder structure
+
+(2) Take picture
+ - from a initialized sfm-data structure, communicate boards to take picture
+ - store pictures in MVE/views/viewXXXX
+ - store feat/desc in imageDescribe/viewXXXX
+
+(3) SFM
+ - make sequential SFM from images, feat-desc files and sfm.bin
+ - returns sparse cloud point, match.txt and export to MVE
+ - sfm-data has camera poses and tracks
+
+(4) Triangulation
+ - make triangulation from computed camera poses (sfm-data.bin)
+ - uses match.txt info to accelerate feature matching
+ - returns sfm-data.bin (tracks and poses)
+
+(5) clean MVE data and export to MVE
+
+(5) continues to MVE procedures
+
+
+================================
+(when delete previous files?)
+
+(1) CALIBRATION
+(delete whole folders)
+ a) start SFM
+ b) take picture
+ c) sequential-sfm
+
+2) KNOWN-POSES
+(keep MVE folder structure, but delete MVE/synth, meta, depth, and undist)
+(da erro se nao tiver as pastas)
+ a) take pictures
+ b) triangulation
+ c) MVE and MVS-Texture
+
+3) FULL RECONSTRUCTION
+(delete whole folders)
+ a) start
+ b) take picture
+ c) sequential-sfm
+ d) MVE and MVS-Texture
+
