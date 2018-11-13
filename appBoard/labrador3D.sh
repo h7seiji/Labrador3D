@@ -15,7 +15,7 @@ IP=10.1.1.250 # with switch
 PASS=citi
 # password of labrador board
 IMAGE=001
-
+# to perform with test images, make a copy inside this dir: test-image/test.jpg
 # ==============================================
 
 echo $PASS | sudo -S modprobe owl_camera
