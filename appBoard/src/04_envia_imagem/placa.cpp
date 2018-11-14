@@ -49,7 +49,7 @@ int receiveInt(int sockfd){
     return num;
 }
 
-void receiveBytes(int sockfd, uchar *buf, int nBytesToReceive){
+void receiveBytes(int sockfd, unsigned char *buf, int nBytesToReceive){
     int bytes_acumulados = 0;
     int bytes_recebidos = 0;
     while(bytes_acumulados < nBytesToReceive){
@@ -59,7 +59,7 @@ void receiveBytes(int sockfd, uchar *buf, int nBytesToReceive){
     }
 }
 
-void sendBytes(int sockfd, uchar *buf, int nBytesToSend){
+void sendBytes(int sockfd, unsigned char *buf, int nBytesToSend){
     while(nBytesToSend > 0){
         int bytes_enviados = write(sockfd,buf,nBytesToSend);
         if(bytes_enviados == -1) perror("send");
@@ -92,7 +92,7 @@ void descToBinaryAndSend(int sockfd, std::string arquivo_desc){
         is.close();
 	
 		sendInt(sockfd,length);//envia um inteiro que represeta o numero de bytes a setem enviados
-		sendBytes(sockfd,(uchar*) buffer,length);//envia os bytes
+		sendBytes(sockfd,(unsigned char*) buffer,length);//envia os bytes
        
         delete[] buffer;
     }
@@ -122,7 +122,7 @@ void featToBinaryAndSend(int sockfd, std::string arquivo_feat){
         is.close();
 	
 		sendInt(sockfd,length);//envia um inteiro que represeta o numero de bytes a setem enviados
-		sendBytes(sockfd,(uchar*) buffer,length);//envia os bytes
+		sendBytes(sockfd,(unsigned char*) buffer,length);//envia os bytes
        
         delete[] buffer;
     }
@@ -178,7 +178,7 @@ int main(int argc, char **argv)
     // REMOVE OPENCV HERE !!
 
 	cv::Mat image;
-    vector<uchar> vb;
+    vector<unsigned char> vb;
     vector<int> param;	// parametros compacta imagem;
     param.push_back(1); //CV_IMWRITE_JPEG_QUALITY
     param.push_back(80);
