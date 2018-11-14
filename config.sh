@@ -1,6 +1,10 @@
+#create startup script
+sudo echo "#run labrador3d" > '/home/citi/startup.sh'
+sudo echo "cd /home/citi/labrador3d/appBoard/" >> '/home/citi/startup.sh'
+sudo echo "sudo bash labrador3d.sh" >> '/home/citi/startup.sh'
 #configure startup script
 #sudo nano .config/lxsession/LXDE/autostart
-sudo echo "@sh /home/citi/labrador3d/appBoard/labrador3d.sh" >> '/home/citi/.config/lxsession/LXDE/autostart'
+sudo echo "@sh /home/citi/startup.sh" >> '/home/citi/.config/lxsession/LXDE/autostart'
 #configure network settings (run with sudo)
 #add last number of ip with
 #sudo nano /etc/network/interfaces
