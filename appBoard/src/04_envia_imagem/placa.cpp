@@ -23,8 +23,6 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -32,7 +30,6 @@
 #include <sys/time.h>
 
 using namespace std;
-using namespace cv;
 
 // ==========================================================
 // Functions communication
@@ -65,6 +62,36 @@ void sendBytes(int sockfd, unsigned char *buf, int nBytesToSend){
         if(bytes_enviados == -1) perror("send");
         nBytesToSend -= bytes_enviados;
         buf += bytes_enviados;
+    }
+}
+
+/// ABRE IMAGEM, TRANSFORMA EM BYTES E ENVIA
+void imageToBinaryAndSend(int sockfd, std::string arquivo_desc){
+	 std::ifstream is (arquivo_desc.c_str(), std::ifstream::binary);
+     if (is) {
+        // get length of file:
+        is.seekg (0, is.end);
+        int length = is.tellg();
+        is.seekg (0, is.beg);
+
+        char * buffer = new char [length];
+
+        std::cout << "Image reading " << length << " char... " << endl;
+        // read data as a block:
+        is.read (buffer,length);
+		
+        if (is)
+			std::cout << "Image read successfully." << endl;
+        else{
+			std::cout << "Image error: only " << is.gcount() << " could be read" << endl;
+			exit(0);
+        }
+        is.close();
+	
+		sendInt(sockfd,length);//envia um inteiro que represeta o numero de bytes a serem enviados
+		sendBytes(sockfd,(unsigned char*) buffer,length);//envia os bytes
+       
+        delete[] buffer;
     }
 }
 
@@ -177,18 +204,14 @@ int main(int argc, char **argv)
 
     // REMOVE OPENCV HERE !!
 
-	cv::Mat image;
     vector<unsigned char> vb;
-    vector<int> param;	// parametros compacta imagem;
-    param.push_back(1); //CV_IMWRITE_JPEG_QUALITY
-    param.push_back(80);
+
 	
 	int sockfd;
     struct hostent *server;
     
     // IP e PORTA
 	int portno = atoi(argv[2]);
-    server =  gethostbyname(argv[1]);// ip server
     
     conexao(&sockfd, portno, server);
 	
@@ -196,10 +219,7 @@ int main(int argc, char **argv)
 	// SEND IMAGEM TO SERVER
 	// ==========================================================
 
-	image = imread(sImageFilename, 1);// carrega imagem (CV_LOAD_IMAGE_COLOR)
-    bool y=cv::imencode(".jpg",image,vb,param);// compacta a imagem
-    sendInt(sockfd,vb.size());//envia um número que represeta o tamanho da imagem compactada em bytes
-    sendBytes(sockfd,vb.data(),vb.size());//envia a imagem compactada
+	imageToBinaryAndSend(sockfd, sImageFilename);
     
 	// ==========================================================
 	// SEND .FEAT .DESC TO SERVER
