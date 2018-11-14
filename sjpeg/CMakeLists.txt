@@ -15,6 +15,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(PROJECT_VERSION 0.1)
+set(CMAKE_CXX_FLAGS "-std=c++0x")
 
 ################################################################################
 # Android only.
