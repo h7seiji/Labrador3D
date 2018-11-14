@@ -40,7 +40,6 @@ fi
 
 ./bin/03_process $IMAGE $PRESET
 
-./sjpeg "$IMAGE.jpg" -o compac.jpg -r 40
-./bin/04_send $IP $(($PORT + 20)) compac.jpg
+./bin/04_send $IP $(($PORT + 20)) $IMAGE
 
 done
