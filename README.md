@@ -12,4 +12,4 @@ $ git push
 $ sudo bash cmake.sh  
 $ sudo bash lib_install.sh  
 $ sudo bash build_appBoard.sh   
-$ sudo bash network.sh  
+$ sudo bash config.sh  
