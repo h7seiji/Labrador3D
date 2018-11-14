@@ -1,7 +1,7 @@
 # Labrador3D
 
 # git commands
-$ git clone -b sjpeg https://github.com/h7seiji/Labrador3D .  
+$ git clone -b sjpeg https://github.com/h7seiji/Labrador3D ~/labrador3d/  
 $ git fetch  
 $ git merge origin/sjpeg  
 $ git add "files"  
