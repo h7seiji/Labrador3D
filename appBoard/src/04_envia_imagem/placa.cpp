@@ -70,7 +70,7 @@ void sendBytes(int sockfd, unsigned char *buf, int nBytesToSend){
 
 /// LE ARQUIVO .DESC, TRANSFORMA EM BYTES E ENVIA
 void descToBinaryAndSend(int sockfd, std::string arquivo_desc){
-	 std::ifstream is (arquivo_desc, std::ifstream::binary);
+	 std::ifstream is (arquivo_desc.c_str(), std::ifstream::binary);
      if (is) {
         // get length of file:
         is.seekg (0, is.end);
@@ -100,7 +100,7 @@ void descToBinaryAndSend(int sockfd, std::string arquivo_desc){
 
 /// LE ARQUIVO .FEAT, TRANSFORMA EM BYTES E ENVIA
 void featToBinaryAndSend(int sockfd, std::string arquivo_feat){
-	 std::ifstream is (arquivo_feat, std::ifstream::binary);
+	 std::ifstream is (arquivo_feat.c_str(), std::ifstream::binary);
      if (is) {
 		 
         // get length of file:
