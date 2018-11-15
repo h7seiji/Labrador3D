@@ -500,8 +500,7 @@ int main(int argc, char **argv)
 	     << "===============================\n\n";
     
 	cout << "SUCCESSFULLY DONE." << endl
-	     << "Computed Tracks: " << sfm_data.structure.size() << endl
-	     << endl << "Global Processing Time: " << mtime << " ms" << endl << endl;
+	     << "Computed Tracks: " << sfm_data.structure.size() << endl << endl;
 	
 	Save(sfm_data,
 		stlplus::create_filespec(sOutDir, "01_sparse_cloud", ".bin"),
