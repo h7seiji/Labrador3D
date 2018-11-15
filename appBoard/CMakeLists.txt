@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 project( labrador3D )
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-set(MVG_INCLUDES /usr/local/include/openMVG_dependencies/cereal/include)
 
 find_package(OpenMVG REQUIRED)
 #find_package(OpenCV REQUIRED)
