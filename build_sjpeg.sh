@@ -7,7 +7,7 @@ cmake . ..
 make -j4
 
 # make a copy inside appBoard folder
-#cp sjpeg ../../appBoard/sjpeg
+cp sjpeg ../../appBoard/bin/sjpeg
 
 # using
 # ./sjpeg image.jpg -o output.jpg -r 50
