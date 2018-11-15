@@ -45,7 +45,7 @@ int receiveInt(int newsockfd){
     return num;
 }
 
-void receiveBytes(int newsockfd, uchar *buf, int nBytesToReceive){
+void receiveBytes(int newsockfd, unsigned char *buf, int nBytesToReceive){
     int bytes_acumulados = 0;
     int bytes_recebidos = 0;
     while(bytes_acumulados < nBytesToReceive){
@@ -55,7 +55,7 @@ void receiveBytes(int newsockfd, uchar *buf, int nBytesToReceive){
     }
 }
 
-void sendBytes(int newsockfd, uchar *buf, int nBytesToSend){
+void sendBytes(int newsockfd, unsigned char *buf, int nBytesToSend){
     while(nBytesToSend > 0){
         int bytes_enviados = write(newsockfd,buf,nBytesToSend);
         if(bytes_enviados == -1) perror("send");
