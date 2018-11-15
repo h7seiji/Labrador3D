@@ -1,0 +1,27 @@
+======================================
+BUILDING appCentral
+======================================
+mkdir bin
+cmake . -Bbuild
+make -Cbuild
+
+=========================================
+MVE and MVS-TEXTURING
+=========================================
+(1) build MVE and MVS-Texturing
+(2) move to appCentral/bin the following apps:
+  dmrecon, scene2pset, fssrecon, meshclean & texrecon
+
+======================================================================
+When using SWITCH, we have to editi PC configurations of IP address
+======================================================================
+
+sudo nano /etc/network/interfaces
+auto eth0
+iface eth0 inet static
+address 10.1.1.250
+netmask 255.255.255.0
+
+# old configs
+#auto lo
+#iface lo inet loopback
