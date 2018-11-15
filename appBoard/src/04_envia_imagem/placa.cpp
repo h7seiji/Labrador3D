@@ -174,9 +174,9 @@ void conexao(int *sockfd, int portno, struct hostent *server){
         fprintf(stderr,"ERROR, no such host\n");
         exit(0);
     }
-    std::memset((char *) &serv_addr, 0, sizeof(serv_addr));
+    bzero((char *) &serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    std::memcpy((char *)server->h_addr,
+    bcopy((char *)server->h_addr,
           (char *)&serv_addr.sin_addr.s_addr,
           server->h_length);
     serv_addr.sin_port = htons(portno);
@@ -189,33 +189,26 @@ void conexao(int *sockfd, int portno, struct hostent *server){
 int main(int argc, char **argv)
 {
 	cout << endl << "(4) ENVIAR DADOS" << endl;
-	if (argc < 4) {
-        fprintf(stderr,"usage %s hostname port\n", argv[0]);
-        exit(0);
-    }
-
-	// FILENAME
-	//string sImageFilename = "00000002.jpg";
-	//string sFeat = "00000002.feat";
-	//string sDesc = "00000002.desc";
+	if (argc < 5) {
+        	fprintf(stderr,"usage %s hostname port\n", argv[0]);
+        	exit(0);
+	}
+	
 	string a = argv[3];
-    string sImageFilename = a + ".jpg";
-    string sFeat = a + ".feat";
-    string sDesc = a + ".desc";
-
-
-    // REMOVE OPENCV HERE !!
-
-    vector<unsigned char> vb;
-
+	string b = argv[4];
+	string sImageFilename = b + ".jpg";
+	string sFeat = a + ".feat";
+	string sDesc = a + ".desc";
+	
 	
 	int sockfd;
-    struct hostent *server;
+	struct hostent *server;
     
-    // IP e PORTA
+	// IP e PORTA
 	int portno = atoi(argv[2]);
-    
-    conexao(&sockfd, portno, server);
+	server =  gethostbyname(argv[1]);// ip server
+	
+	conexao(&sockfd, portno, server);
 	
 	// ==========================================================
 	// SEND IMAGEM TO SERVER
@@ -227,15 +220,15 @@ int main(int argc, char **argv)
 	// SEND .FEAT .DESC TO SERVER
 	// ==========================================================
     
-    int conf_img = receiveInt(sockfd);
+	int conf_img = receiveInt(sockfd);
 	featToBinaryAndSend(sockfd, sFeat);
-    int conf_feat = receiveInt(sockfd);
+	int conf_feat = receiveInt(sockfd);
 	descToBinaryAndSend(sockfd, sDesc);
 	
-    close(sockfd);
+	close(sockfd);
 	
 	cout << "Sent!" << endl
-		 << "-----------------------" << endl << endl;
+	     << "-----------------------" << endl << endl;
 	return EXIT_SUCCESS;
     
 }
