@@ -3,7 +3,7 @@
 # ================================================
 # ============= P A R A M E T R O S ==============
 # ================================================
-N=5	# numero de placas
+N=$1	# numero de placas
 R=2	# resolucao da deteccao (0,1,2)
 F=612	# distancia focal da camera
 TESTE=1	# usa imagens de teste ou nao (0,1)
