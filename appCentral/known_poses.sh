@@ -39,7 +39,7 @@ then
 START=$(date +%s%N)
 ./bin/takePictures $N $R $TESTE
 END=$(date +%s%N)
-DIFF=$( (($END - $START)/1000000) )
+DIFF=$((($END - $START)/1000000))
 echo -e "Distributed Feature Detection Time: $DIFF ms\n"
 
 START=$(date +%s%N)
