@@ -16,11 +16,14 @@
 #include <cstdlib>
 #include <pthread.h>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <vector>
+#include <cstring>
+
+//#include <opencv2/core/core.hpp>
+//#include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
-using namespace cv;
+//using namespace cv;
 
 // ==========================================================
 // Functions communication
@@ -162,9 +165,9 @@ void *connect_send_command_take_picture(void *parametros) {
 }
 
 void *connect_receive_image_feat_desc(void *port_no) {
-	int *port;				// PEGA O NUMERO DA PORTA DESSA THREAD
-	port = (int *)port_no;	// SO FUNCIONOU DESSE JEITO ESTRANHO
-	int portno;				//
+	int *port;			// PEGA O NUMERO DA PORTA DESSA THREAD
+	port = (int *)port_no;		// SO FUNCIONOU DESSE JEITO ESTRANHO
+	int portno;			//
 	portno = *port;			//
 	
 	string sImage = "MVE/views/";
@@ -175,57 +178,56 @@ void *connect_receive_image_feat_desc(void *port_no) {
 	//cout << portno << " - " << viewXXXX << endl;
 
 	int nBytes;
-    vector<uchar> vb;
-    vector<uchar> vb_desc;
-    vector<uchar> vb_feat;
-    cv::Mat image;
-
-    vector<int> param;
-    param.push_back(1); //CV_IMWRITE_JPEG_QUALITY
-    param.push_back(80);
-
+	vector<unsigned char> vb;
+	vector<unsigned char> vb_desc;
+	vector<unsigned char> vb_feat;
 	
+	//cv::Mat image;
+	//vector<int> param;
+	//param.push_back(1); //CV_IMWRITE_JPEG_QUALITY
+	//param.push_back(80);
     
-    int sockfd, newsockfd;
+	int sockfd, newsockfd;
 	socklen_t clilen;
-    struct sockaddr_in serv_addr, cli_addr;
-    
+	struct sockaddr_in serv_addr, cli_addr;
+
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
-        error("ERROR opening socket");
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(portno);
-    if (bind(sockfd, (struct sockaddr *) &serv_addr,
-             sizeof(serv_addr)) < 0)
-        error("ERROR on binding");
-    listen(sockfd,5);
-    clilen = sizeof(cli_addr);
-    newsockfd = accept(sockfd,
-                       (struct sockaddr *) &cli_addr,
-                       &clilen);
-    if (newsockfd < 0)
-        error("ERROR on accept");    
+	if (sockfd < 0)
+		error("ERROR opening socket");
+	bzero((char *) &serv_addr, sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_addr.s_addr = INADDR_ANY;
+	serv_addr.sin_port = htons(portno);
+	if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+		error("ERROR on binding");
+	listen(sockfd,5);
+	clilen = sizeof(cli_addr);
+	newsockfd = accept(sockfd,
+		       (struct sockaddr *) &cli_addr,
+		       &clilen);
+	if (newsockfd < 0)
+		error("ERROR on accept");    
          
 	// RECEBE IMAGEM COLORIDA
 	nBytes = receiveInt(newsockfd);//recebe o tamanho da imagem compactada
 	cout << "mBytes" << nBytes << endl;
-    vb.resize(nBytes);
-    receiveBytes(newsockfd,vb.data(),nBytes);//recebe a imagem compactada e coloca no vetor vb
-    image = cv::imdecode(vb,1);//descompacta a imagem
-    //cv::imwrite(sImage + "photo"+num_port+".jpg",image,param);
-    cv::imwrite(sImage + filename,image,param);
-    cout << "recebeu imagem de " << portno << endl;
+	vb.resize(nBytes);
+	receiveBytes(newsockfd,vb.data(),nBytes);//recebe a imagem compactada e coloca no vetor vb
+	//image = cv::imdecode(vb,1);//descompacta a imagem
+	//cv::imwrite(sImage + filename,image,param);
+	ofstream outfileImg ((sImage + filename).c_str(),ofstream::binary);
+	outfileImg.write ((char*)vb.data(),nBytes);
+	outfileImg.close();
+	cout << "recebeu imagem de " << portno << endl;
 
 	sendInt(newsockfd,1); // confirmacao
 	
 	// RECEBE ARQUIVO .FEAT E SALVA COMO TEST_no.feat
 	nBytes = receiveInt(newsockfd);
-    vb_feat.resize(nBytes);
-    receiveBytes(newsockfd,vb_feat.data(),nBytes);   
-    ofstream outfilefeat ((sFeat_Desc + filename + ".feat").c_str(),ofstream::binary);
-    //ofstream outfilefeat ((sFeat_Desc + "filefeat"+num_port+".feat").c_str(),ofstream::binary);
+	vb_feat.resize(nBytes);
+	receiveBytes(newsockfd,vb_feat.data(),nBytes);   
+	ofstream outfilefeat ((sFeat_Desc + filename + ".feat").c_str(),ofstream::binary);
+	//ofstream outfilefeat ((sFeat_Desc + "filefeat"+num_port+".feat").c_str(),ofstream::binary);
 	outfilefeat.write ((char*)vb_feat.data(),nBytes);
 	outfilefeat.close();
 	cout << "recebeu .feat de " << portno << endl;
@@ -234,9 +236,9 @@ void *connect_receive_image_feat_desc(void *port_no) {
 	
 	// RECEBE ARQUIVO .DESC E SALVA COMO TEST_no.desc
 	nBytes = receiveInt(newsockfd);
-    vb_desc.resize(nBytes);
-    receiveBytes(newsockfd,vb_desc.data(),nBytes);    
-    ofstream outfiledesc ((sFeat_Desc + filename+".desc").c_str(),ofstream::binary);
+	vb_desc.resize(nBytes);
+	receiveBytes(newsockfd,vb_desc.data(),nBytes);    
+	ofstream outfiledesc ((sFeat_Desc + filename+".desc").c_str(),ofstream::binary);
 	outfiledesc.write ((char*)vb_desc.data(),nBytes);
 	outfiledesc.close();
 	cout << "recebeu .desc de " << portno << endl;
