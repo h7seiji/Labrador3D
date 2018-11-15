@@ -4,7 +4,7 @@ project( hey3D )
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 find_package(OpenMVG REQUIRED)
-find_package(OpenCV REQUIRED)
+#find_package(OpenCV REQUIRED)
 find_package(Threads)
 
 add_subdirectory(src/dataInit)
