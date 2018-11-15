@@ -36,13 +36,13 @@ fi
 if [ $REC -eq 1 ]
 then
 
-START=$(date +%s)
+START=$(date +%s%N)
 ./bin/takePictures $N $R $TESTE
-END=$(date +%s)
-DIFF=$(( $END - $START ))
-echo -e "Distributed Feature Detection Time: $DIFF seconds\n"
+END=$(date +%s%N)
+DIFF=$( (($END - $START)/1000000) )
+echo -e "Distributed Feature Detection Time: $DIFF ms\n"
 
-START=$(date +%s)
+START=$(date +%s%N)
 
 ./bin/triangulation -p $R
 ./bin/export2MVE
@@ -59,8 +59,8 @@ echo -e "\n\nSURFACE RECONSTRUCTION\n"
 echo -e "\n\nTEXTURE RECONSTRUCTION\n"
 ./bin/texrecon MVE::undistorted output/04_surface_clean.ply output/05_textured
 
-END=$(date +%s)
-DIFF2=$(( $DIFF + $END - $START ))
-echo -e "\nReconstruction Time: $DIFF2 seconds"
+END=$(date +%s%N)
+DIFF2=$(( $DIFF + (($END-$START)/1000000) ))
+echo -e "\nReconstruction Time: $DIFF2 ms"
 
 fi
