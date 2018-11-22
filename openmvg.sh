@@ -1,6 +1,6 @@
 # (4) Build OpenMVG-short
 
-sudo apt-get install ligpng-dev libjpeg-dev libtiff-dev
+sudo apt-get install libpng-dev libjpeg-dev libtiff-dev
 
 cd openMVG-short
 mkdir build
