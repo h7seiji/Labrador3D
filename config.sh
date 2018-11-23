@@ -20,6 +20,7 @@ sudo echo "netmask 255.255.255.0" >> '/etc/network/interfaces'
 sudo echo "" >> '/etc/network/interfaces'
 sudo echo "#auto eth0" >> '/etc/network/interfaces'
 sudo echo "#iface eth0 inet dhcp" >> '/etc/network/interfaces'
+sudo nano /home/citi/labrador3d/appBoard/labrador3d.sh
 sudo nano /etc/network/interfaces
 sudo ifconfig eth0 up
 sudo /etc/init.d/networking restart
