@@ -35,7 +35,7 @@ then
   cp test-image/test.jpg "$IMAGE.jpg"
   rm com2.txt
 else
-  mplayer -vo jpeg -frame 2 tv://
+  mplayer -vo jpeg -frames 2 tv://
   mv 00000002.jpg "$IMAGE.jpg"
 fi
 
