@@ -117,7 +117,8 @@ void *connect_send_commands(void *parametros) {
 	close(sockfd);
 	cout << "confimacao de " << portno << " : " << confirmacao_placa << endl;
 	
-	pthread_exit(NULL);
+	//pthread_exit(NULL);
+	return NULL;
 }
 
 void *connect_send_command_take_picture(void *parametros) {
@@ -161,7 +162,8 @@ void *connect_send_command_take_picture(void *parametros) {
 	close(sockfd);
 	cout << "confimacao de " << portno << " : " << confirmacao_placa << endl;
 	
-	pthread_exit(NULL);
+	//pthread_exit(NULL);
+	return NULL;
 }
 
 void *connect_receive_image_feat_desc(void *port_no) {
@@ -245,7 +247,8 @@ void *connect_receive_image_feat_desc(void *port_no) {
 	
 	close(sockfd);
 	
-	pthread_exit(NULL);
+	//pthread_exit(NULL);
+	return NULL;
 }
 
 // ==================================================================
