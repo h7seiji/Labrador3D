@@ -15,7 +15,6 @@ IP=10.1.1.250 # with switch
 PASS=citi
 # password of labrador board
 IMAGE=001
-IMAGE2=compac
 # to perform with test images, make a copy inside this dir: test-image/test.jpg
 # ==============================================
 
@@ -41,6 +40,6 @@ fi
 
 ./bin/03_process $IMAGE $PRESET
 
-./bin/04_send $IP $(($PORT + 20)) $IMAGE $IMAGE2
+./bin/04_send $IP $(($PORT + 20)) $IMAGE $IMAGE
 
 done
