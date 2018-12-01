@@ -81,6 +81,7 @@
 
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <utility>
 #include <sys/time.h>
@@ -152,10 +153,12 @@ int main(int argc, char **argv)
 	
 	string sDescPreset = "NORMAL";
 	double dMax_reprojection_error = 4.0; // for both methods
+	string report;
 	
 	cmd.add( make_option('p', sDescPreset, "describer_preset") );
 	cmd.add( make_option('r', dMax_reprojection_error, "residual_threshold"));
-
+	cmd.add( make_option('z', report, "report file name") );
+	
 	//cmd.add( make_option('n', num_port, "num ports") );
 	//cmd.add( make_option('w', img_width, "image width") );
 	//cmd.add( make_option('h', img_height, "image height") );
@@ -505,6 +508,14 @@ int main(int argc, char **argv)
 	Save(sfm_data,
 		stlplus::create_filespec(sOutDir, "01_sparse_cloud", ".bin"),
 		ESfM_Data(ALL));
+	
+	ofstream file (report);
+	if (file.is_open())
+	{
+		file << "Feature Matching: " << aux_timer << " ms\n";
+		file << "Triangulation: " << mtime << " ms\n";
+		file.close();
+	}
 	
 	return EXIT_SUCCESS;
     
