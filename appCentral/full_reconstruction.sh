@@ -50,7 +50,7 @@ done
 # ========================================================
 # STRUCTURE FROM MOTION
 START=$(date +%s%N)
-./bin/sequentialSFM -p $R
+./bin/sequentialSFM -p $R -z $FILE
 ./bin/export2MVE
 #./bin/p05-color -i output/01_sparse_cloud.bin -o output/01_colored.ply
 END=$(date +%s%N)
