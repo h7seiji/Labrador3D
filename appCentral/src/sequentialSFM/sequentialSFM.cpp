@@ -65,6 +65,7 @@
 
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <utility>
 #include <sys/time.h>
@@ -142,13 +143,14 @@ int main(int argc, char **argv)
 	const string sDescribeDir = "imageDescribe";
 	string sDescPreset = "NORMAL";
 	string sIntrinsic_refinement_options = "ADJUST_ALL";
-
+	string report;
 	//double distortion1=0.0, distortion2=0.0, distortion3=0.0;
 
 	
 	//cmd.add( make_option('d', sDescriberType, "image_describer") );
 	cmd.add( make_option('p', sDescPreset, "describer_preset") );
 	cmd.add( make_option('r', sIntrinsic_refinement_options, "refineIntrinsics") );
+	cmd.add( make_option('z', report, "report file name") );
 	
 	if (argc == 1) 
 	{
@@ -437,6 +439,14 @@ int main(int argc, char **argv)
 	Save(results,
 		stlplus::create_filespec(sOutDir, "01_sparse_cloud", ".bin"),
 		ESfM_Data(ALL));
+	
+	ofstream file (report);
+	if (file.is_open())
+	{
+		file << "Feature Matching: " << aux_timer << " ms\n";
+		file << "Sequential SFM: " << mtime << " ms\n";
+		file.close();
+	}
 	
 	return EXIT_SUCCESS;
     
