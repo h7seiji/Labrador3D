@@ -1,9 +1,9 @@
 # Labrador3D
 
 # git commands
-$ git clone https://github.com/h7seiji/Labrador3D ~/labrador3d/  
+$ git clone -b opencv https://github.com/h7seiji/Labrador3D ~/labrador3d/  
 $ git fetch  
-$ git merge origin/master  
+$ git merge origin/opencv  
 $ git add "files"  
 $ git commit  
 $ git push  
